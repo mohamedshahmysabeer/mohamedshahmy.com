@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPAL X - About Us</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-black: #000000;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+            --accent-coral: #ff6b5a;
+            --accent-teal: #4ade80;
+            --card-bg: #0a0a0a;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg-black);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated gradient background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 90, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(74, 222, 128, 0.15), transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 50%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            padding: 1rem 4rem;
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--text-white), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .online-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: black;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .online-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-teal);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        .phone {
+            color: var(--text-white);
+            font-weight: 500;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        .phone:hover {
+            color: var(--accent-teal);
+        }
+
+        .book-btn {
+            background: var(--accent-coral);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .book-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 90, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 14rem 4rem 8rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 5.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            line-height: 1.05;
+            letter-spacing: -3px;
+            background: linear-gradient(135deg, var(--text-white) 0%, var(--text-gray) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleEntry 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes titleEntry {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+                letter-spacing: 10px;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                letter-spacing: -3px;
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            padding: 6rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mission-content {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+
+        .mission-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, transparent 70%);
+            animation: missionGlow 10s linear infinite;
+        }
+
+        @keyframes missionGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .mission-content:hover {
+            border-color: rgba(74, 222, 128, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .mission-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--text-white), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mission-content p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            line-height: 1.9;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 5rem 4rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--text-white), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 90, 0.1), rgba(74, 222, 128, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .value-card:hover::before {
+            opacity: 1;
+        }
+
+        .value-card:hover {
+            border-color: rgba(74, 222, 128, 0.5);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(74, 222, 128, 0.2);
+        }
+
+        .value-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: all 0.4s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .value-card:hover .value-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .value-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover h3 {
+            color: var(--accent-teal);
+        }
+
+        .value-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 6rem 4rem;
+            background: rgba(10, 10, 10, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .process-step:hover {
+            transform: translateY(-10px);
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-coral), var(--accent-teal));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 auto 2rem;
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+            animation: stepPulse 3s infinite;
+            animation-delay: calc(var(--step) * 0.3s);
+        }
+
+        @keyframes stepPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+            }
+            50% { 
+                transform: scale(1.1);
+                box-shadow: 0 15px 40px rgba(74, 222, 128, 0.5);
+            }
+        }
+
+        .process-step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .process-step p {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* Locations Section */
+        .locations-section {
+            padding: 6rem 4rem;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .location-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 90, 0.05), rgba(74, 222, 128, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .location-card:hover::before {
+            opacity: 1;
+        }
+
+        .location-card:hover {
+            border-color: rgba(74, 222, 128, 0.5);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(74, 222, 128, 0.2);
+        }
+
+        .location-flag {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .location-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .location-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 4rem;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 5rem 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 107, 90, 0.1), transparent 70%);
+            animation: ctaGlow 5s ease-in-out infinite;
+        }
+
+        @keyframes ctaGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .cta-box h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--text-white), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-box p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--accent-coral);
+            color: white;
+            padding: 1.3rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(255, 107, 90, 0.3);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-btn:hover::before {
+            left: 100%;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 107, 90, 0.5);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-teal), #3b82f6);
+            border-radius: 50%;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 6rem 4rem;
+            background: rgba(10, 10, 10, 0.4);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-teal), #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .values-grid,
+            .process-grid,
+            .locations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 2rem;
+                flex-wrap: wrap;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+            }
+
+            .phone {
+                display: none;
+            }
+
+            .hero {
+                padding: 10rem 2rem 5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+                letter-spacing: -1px;
+            }
+
+            .container,
+            .mission-section,
+            .values-section,
+            .process-section,
+            .locations-section,
+            .cta-section,
+            .stats-section {
+                padding: 3rem 2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .mission-content {
+                padding: 3rem 2rem;
+            }
+
+            .mission-content h2,
+            .cta-box h2 {
+                font-size: 2.2rem;
+            }
+
+            .cta-box {
+                padding: 3rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">OPAL X</div>
+        <ul class="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="services.html">Service</a></li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <div class="online-badge">
+                <div class="online-dot"></div>
+                Online
+            </div>
+            <span class="phone">+61 2 1234 5678</span>
+            <button class="book-btn">Book a call</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Building Digital<br>Excellence</h1>
+        <p>We're a team of strategists, designers, developers, and growth specialists dedicated to creating functional websites that drive real business results.</p>
+    </div>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <h2>Our Mission</h2>
+                <p>To empower Australian businesses with high-performance digital solutions that turn traffic into revenue. We believe every website should be a profit center, not just a digital brochure. Through strategic planning, conversion-focused design, and measurable growth tactics, we help SMEs and growth brands build online assets that pay for themselves.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">50+</span>
+                    <p class="stat-label">Projects Delivered</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">&lt;2.0s</span>
+                    <p class="stat-label">Average LCP Speed</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">98%</span>
+                    <p class="stat-label">Client Satisfaction</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">24/7</span>
+                    <p class="stat-label">Support Available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title">Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Results-Driven</h3>
+                    <p>Every decision we make is measured against business outcomes. We don't build pretty websites—we build revenue engines that deliver measurable ROI through strategic design and conversion optimization.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h3>Performance First</h3>
+                    <p>Speed isn't optional. We obsess over Core Web Vitals, achieving sub-2-second load times across all builds. Fast sites rank higher, convert better, and deliver superior user experiences.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h3>Transparent Process</h3>
+                    <p>No hidden fees, no surprises. We provide clear pricing, honest timelines, and regular progress updates. You'll always know what we're building, why we're building it, and what results to expect.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Partnership Mindset</h3>
+                    <p>Your success is our success. We're not just vendors—we're strategic partners invested in your growth. Our care plans ensure your site evolves with your business needs.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <h3>Security & Reliability</h3>
+                    <p>We build with enterprise-grade security standards. Regular backups, WAF protection, SSL certificates, and 24/7 monitoring ensure your digital assets are always protected and available.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">📈</div>
+                    <h3>Continuous Growth</h3>
+                    <p>Launch is just the beginning. Through ongoing optimization, A/B testing, content strategy, and data-driven improvements, we help your site grow alongside your business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="section-title">How We Work</h2>
+            <div class="process-grid">
+                <div class="process-step" style="--step: 0;">
+                    <div class="step-number">1</div>
+                    <h3>Discovery & Model</h3>
+                    <p>We deep-dive into your audience, offer, value proposition, and KPIs to build a strategic foundation that aligns technology with business goals.</p>
+                </div>
+
+                <div class="process-step" style="--step: 1;">
+                    <div class="step-number">2</div>
+                    <h3>Build for Conversion</h3>
+                    <p>UX design, persuasive copy, lightning-fast development, and trust-building elements combine to create websites that turn visitors into customers.</p>
+                </div>
+
+                <div class="process-step" style="--step: 2;">
+                    <div class="step-number">3</div>
+                    <h3>Traffic & Authority</h3>
+                    <p>Strategic SEO, targeted paid campaigns, and content marketing drive qualified traffic to your optimized site, building authority in your market.</p>
+                </div>
+
+                <div class="process-step" style="--step: 3;">
+                    <div class="step-number">4</div>
+                    <h3>Measure & Scale</h3>
+                    <p>Custom dashboards, ongoing experiments, and feature sprints ensure continuous improvement and scalable growth based on real data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section class="locations-section">
+        <div class="container">
+            <h2 class="section-title">Global Presence, Local Expertise</h2>
+            <div class="locations-grid">
+                <div class="location-card">
+                    <div class="location-flag">🇦🇺</div>
+                    <h3>Sydney / NSW, Australia</h3>
+                    <p>Our Australian headquarters serves as the strategic center for all client operations. We understand the local market, compliance requirements, and business culture across Australia.</p>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-flag">🇱🇰</div>
+                    <h3>Colombo, Sri Lanka</h3>
+                    <p>Our development hub in Colombo houses our engineering and design teams. This allows us to deliver premium quality at competitive rates while maintaining 24/7 operational coverage across time zones.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title">Industries We Serve</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">📊</div>
+                    <h3>Accounting & Tax</h3>
+                    <p>Compliance-focused websites with trust signals, booking systems, and service pages designed to convert consultations. AHPRA-aware copywriting where required.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">💼</div>
+                    <h3>BPO & Outsourcing</h3>
+                    <p>Case-study-led lead generation platforms that showcase expertise, build authority, and convert enterprise clients through strategic content.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🔨</div>
+                    <h3>Trades & Services</h3>
+                    <p>Local SEO powerhouses with quote forms, phone routing, Google Business optimization, and service-area pages that dominate local packs.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🏥</div>
+                    <h3>Healthcare</h3>
+                    <p>Accessible, WCAG-compliant sites with appointment booking, patient portals, and AHPRA-compliant content that builds trust and converts patients.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🎓</div>
+                    <h3>Education</h3>
+                    <p>Enrollment funnels, webinar pipelines, course catalogs, and lead nurture systems that convert prospects into enrolled students.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🛒</div>
+                    <h3>E-Commerce</h3>
+                    <p>High-converting Shopify and WooCommerce stores with optimized product feeds, cart recovery, and multi-channel sales integration.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">⚖️</div>
+                    <h3>Professional Services</h3>
+                    <p>Authority-building platforms for consultants, lawyers, and professional firms with case studies, testimonials, and strategic content.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🏢</div>
+                    <h3>Enterprise & SaaS</h3>
+                    <p>Scalable platforms with advanced integrations, API connectivity, and custom functionality tailored to complex business requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners & Credentials Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title">Partners & Technologies</h2>
+            <div class="mission-content" style="margin-top: 3rem;">
+                <p style="font-size: 1.1rem; max-width: 100%; margin-bottom: 2rem;">We work with industry-leading platforms and technologies to deliver best-in-class solutions:</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 3rem; position: relative; z-index: 1;">
+                    <div style="color: var(--text-gray); font-weight: 600;">WordPress</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">Next.js</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">Shopify</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">Webflow</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">Google Analytics</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">HubSpot</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">Pipedrive</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">AWS</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">Microsoft Clarity</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">Google Ads</div>
+                    <div style="color: var(--text-gray); font-weight: 600;">Meta Business</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Standards Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <h2>Technical Excellence Standards</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; text-align: left; position: relative; z-index: 1;">
+                    <div>
+                        <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1.3rem;">Performance</h3>
+                        <ul style="list-style: none; color: var(--text-gray); line-height: 2;">
+                            <li>✓ LCP &lt; 2.0 seconds</li>
+                            <li>✓ CLS &lt; 0.1</li>
+                            <li>✓ INP &lt; 200ms</li>
+                            <li>✓ CDN-optimized delivery</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1.3rem;">Accessibility</h3>
+                        <ul style="list-style: none; color: var(--text-gray); line-height: 2;">
+                            <li>✓ WCAG 2.2 AA compliance</li>
+                            <li>✓ Screen reader compatible</li>
+                            <li>✓ Keyboard navigation</li>
+                            <li>✓ Proper contrast ratios</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1.3rem;">SEO Foundation</h3>
+                        <ul style="list-style: none; color: var(--text-gray); line-height: 2;">
+                            <li>✓ Schema markup</li>
+                            <li>✓ XML sitemaps</li>
+                            <li>✓ Canonical tags</li>
+                            <li>✓ Meta optimization</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1.3rem;">Security</h3>
+                        <ul style="list-style: none; color: var(--text-gray); line-height: 2;">
+                            <li>✓ SSL/HSTS enabled</li>
+                            <li>✓ WAF protection</li>
+                            <li>✓ Regular backups</li>
+                            <li>✓ Two-factor auth</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Case Studies Preview -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title">Featured Success Stories</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Career Campus</h3>
+                    <p><strong>Industry:</strong> Education/BPO<br><br>Launched comprehensive lead-gen site with enrollment funnels, resulting in significant inquiry increases and improved lifetime value per student.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">💼</div>
+                    <h3>EBATS</h3>
+                    <p><strong>Industry:</strong> Accounting & Tax<br><br>Ethical Accounting & Taxation Services saw decreased cost-per-lead and increased call bookings through optimized service pages and booking flow.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">📈</div>
+                    <h3>EduLink Group</h3>
+                    <p><strong>Industry:</strong> Payroll/Outsourcing<br><br>Strategic positioning, full site build, and SEO foundations delivered new client MRR growth and market authority.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="mission-section">
+        <div class="container">
+            <h2 class="section-title" style="margin-bottom: 2rem;">Leadership Team</h2>
+            <div class="mission-content">
+                <p style="font-size: 1.2rem; position: relative; z-index: 1;">Our leadership team brings decades of combined experience in web development, digital marketing, and business strategy. We're committed to staying at the forefront of technology trends while maintaining our focus on what matters most: delivering measurable business results for our clients.</p>
+                <div style="margin-top: 3rem; text-align: center; position: relative; z-index: 1;">
+                    <p style="color: var(--text-gray); font-size: 1.05rem;">Want to meet the team? Book a strategy call and we'll introduce you to the people who'll be working on your project.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Ready to Build Something Amazing?</h2>
+                <p>Let's discuss your project and create a digital solution that drives real business growth.</p>
+                <button class="cta-btn">
+                    <div class="avatar"></div>
+                    Book a Strategy Call with Mohamed
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Info Section -->
+    <section class="mission-section" style="padding-top: 2rem;">
+        <div class="container">
+            <div style="text-align: center; padding: 3rem 0;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                    <div>
+                        <h4 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1.1rem;">Contact</h4>
+                        <p style="color: var(--text-gray); line-height: 1.8;">
+                            +61 2 1234 5678<br>
+                            hello@opalx.com.au
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1.1rem;">Australia Office</h4>
+                        <p style="color: var(--text-gray); line-height: 1.8;">
+                            Sydney, NSW<br>
+                            Australia
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1.1rem;">Global Hub</h4>
+                        <p style="color: var(--text-gray); line-height: 1.8;">
+                            Colombo<br>
+                            Sri Lanka
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-teal); margin-bottom: 1rem; font-size: 1.1rem;">Business</h4>
+                        <p style="color: var(--text-gray); line-height: 1.8;">
+                            ABN: [Your ABN]<br>
+                            ACN: [Your ACN]
+                        </p>
+                    </div>
+                </div>
+                <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem;">
+                    <p style="color: var(--text-gray); font-size: 0.9rem;">© 2025 OPAL X. Functional websites that monetise.</p>
+                    <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                        <a href="#" style="color: var(--text-gray); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Privacy Policy</a>
+                        <a href="#" style="color: var(--text-gray); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Terms of Service</a>
+                        <a href="#" style="color: var(--text-gray); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Cookie Policy</a>
+                        <a href="#" style="color: var(--text-gray); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.value-card, .location-card, .mission-content, .process-step, .stat-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+            observer.observe(element);
+        });
+
+        // Stagger animation for grid items
+        document.querySelectorAll('.values-grid .value-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.stats-grid .stat-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.15}s`;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

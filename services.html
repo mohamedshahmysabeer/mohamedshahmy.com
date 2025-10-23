@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPAL X - Services & Pricing</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-black: #000000;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+            --accent-coral: #ff6b5a;
+            --accent-teal: #4ade80;
+            --card-bg: #0a0a0a;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg-black);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated gradient background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 90, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(74, 222, 128, 0.15), transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 50%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            50% { transform: translateY(-100px) translateX(50px); opacity: 0.6; }
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page.active {
+            display: block;
+            animation: pageEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes pageEntry {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            padding: 1rem 4rem;
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--text-white), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .online-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: black;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .online-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-teal);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        .phone {
+            color: var(--text-white);
+            font-weight: 500;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        .phone:hover {
+            color: var(--accent-teal);
+        }
+
+        .book-btn {
+            background: var(--text-white);
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .book-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 90, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 14rem 4rem 8rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 5.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            line-height: 1.05;
+            letter-spacing: -3px;
+            background: linear-gradient(135deg, var(--text-white) 0%, var(--text-gray) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleEntry 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes titleEntry {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+                letter-spacing: 10px;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                letter-spacing: -3px;
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+            transition: all 0.3s;
+        }
+
+        .hero-feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .checkmark {
+            color: var(--accent-teal);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-black);
+            color: rgb(255, 255, 255);
+            padding: 1.3rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 3rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(255, 107, 90, 0.3);
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .hero-cta:hover::before {
+            left: 100%;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 107, 90, 0.5);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--card-bg), #3b82f6);
+            border-radius: 50%;
+            animation: avatarPulse 2s infinite;
+            position: relative;
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(74, 106, 222, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 5rem 4rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--text-white), var(--text-white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 90, 0.1), rgba(74, 222, 128, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            border-color: rgba(74, 222, 128, 0.5);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(74, 222, 128, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: all 0.4s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .service-card h3 {
+            font-size: 1.9rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover h3 {
+            color: var(--accent-teal);
+        }
+
+        .service-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-features {
+            list-style: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-features li {
+            padding: 0.6rem 0;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover .service-features li {
+            transform: translateX(5px);
+        }
+
+        .service-features li::before {
+            content: '✓';
+            color: var(--accent-teal);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 5rem 4rem;
+        }
+
+        .pricing-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 90, 0.05), rgba(74, 222, 128, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent-coral);
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(255, 107, 90, 0.3);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-coral);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pricing-card:hover {
+            border-color: rgba(74, 222, 128, 0.5);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(74, 222, 128, 0.2);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 30px 80px rgba(255, 107, 90, 0.4);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-teal), #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1.5rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-subtext {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-features li {
+            padding: 0.9rem 0;
+            color: var(--text-gray);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover .pricing-features li {
+            transform: translateX(5px);
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--accent-teal);
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .pricing-cta {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--accent-coral);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .pricing-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .pricing-cta:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .pricing-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 90, 0.5);
+        }
+
+        /* Care Plans */
+        .care-plans {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 5rem;
+            margin: 6rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .care-plans::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, transparent 70%);
+            animation: careGlow 8s linear infinite;
+        }
+
+        @keyframes careGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .care-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+
+        .care-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .care-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .care-card {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .care-card:hover {
+            border-color: rgba(74, 222, 128, 0.5);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(74, 222, 128, 0.2);
+        }
+
+        .care-card h4 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .care-price {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-teal), #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        /* Custom Solution */
+        .custom-solution {
+            text-align: center;
+            padding: 5rem 4rem;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            margin: 5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .custom-solution h3 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .custom-solution p {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .services-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 2rem;
+                flex-wrap: wrap;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+            }
+
+            .phone {
+                display: none;
+            }
+
+            .hero {
+                padding: 10rem 2rem 5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+                letter-spacing: -1px;
+            }
+
+            .hero-features {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .container,
+            .services-section,
+            .pricing-section {
+                padding: 3rem 2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .care-plans {
+                padding: 3rem 2rem;
+            }
+
+            .care-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Particles -->
+    <div id="particles-container"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo" onclick="location.reload()">OPAL X</div>
+        <ul class="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="aboutus.html">About us</a></li>
+            <li><a href="services.html">service</a></li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <div class="online-badge">
+                <div class="online-dot"></div>
+                Online
+            </div>
+            <span class="phone">+61 2 1234 5678</span>
+            <button class="book-btn">Book a call</button>
+        </div>
+    </nav>
+
+    <!-- SERVICES PAGE -->
+    <div id="services-page" class="page active">
+        <div class="hero">
+            <h1>Functional Websites That<br>Monetise</h1>
+            <p>We build Australian-ready websites that turn traffic into booked calls, quotes, and sales. Save time and money with a dedicated team.</p>
+            
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <span class="checkmark">✓</span>
+                    <span>Dedicated Senior Talent</span>
+                </div>
+                <div class="hero-feature">
+                    <span class="checkmark">✓</span>
+                    <span>Dedicated Project Manager</span>
+                </div>
+                <div class="hero-feature">
+                    <span class="checkmark">✓</span>
+                    <span>Pause or Cancel Anytime</span>
+                </div>
+            </div>
+
+            <a href="#" class="hero-cta">
+                <div class="avatar"></div>
+                Book a call with Mohamed
+            </a>
+        </div>
+
+        <div class="services-section">
+            <h2 class="section-title">Our Core Services</h2>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Web Design & Development</h3>
+                    <p>High-performing, conversion-driven websites designed to attract leads, convert customers, and grow revenue. From corporate pages to advanced SaaS platforms.</p>
+                    <ul class="service-features">
+                        <li>WordPress, Headless, Shopify & Webflow</li>
+                        <li>UX wireframes & design systems</li>
+                        <li>Core Web Vitals optimized (&lt;2.0s LCP)</li>
+                        <li>Schema markup & SEO foundations</li>
+                        <li>Mobile-first responsive design</li>
+                        <li>Component libraries & CMS training</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Custom Software Development</h3>
+                    <p>Scalable web and mobile applications tailored to your business needs—from CRMs and booking systems to complete enterprise software.</p>
+                    <ul class="service-features">
+                        <li>Custom CRM & booking systems</li>
+                        <li>SaaS platform development</li>
+                        <li>API integrations & automation</li>
+                        <li>Enterprise software solutions</li>
+                        <li>Database architecture & scaling</li>
+                        <li>Cloud deployment & infrastructure</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Search Engine Optimisation (SEO)</h3>
+                    <p>Powerful on-page, off-page, and technical SEO strategies to improve visibility, outrank competitors, and drive qualified traffic from Google.</p>
+                    <ul class="service-features">
+                        <li>Local SEO for Australian businesses</li>
+                        <li>Service-area pages & E-E-A-T content</li>
+                        <li>Technical SEO audits & fixes</li>
+                        <li>.au domain optimization</li>
+                        <li>Monthly content sprints</li>
+                        <li>Structured data & schema markup</li>
+                    </ul>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Digital Marketing & Lead Generation</h3>
+                    <p>Beyond websites—delivering Google Ads, social media campaigns, and conversion-optimised landing pages that turn clicks into customers.</p>
+                    <ul class="service-features">
+                        <li>Google Ads, Meta & LinkedIn campaigns</li>
+                        <li>Full-funnel lead generation</li>
+                        <li>Call tracking & offline conversions</li>
+                        <li>Landing page optimization</li>
+                        <li>Lead magnets & retargeting</li>
+                        <li>ROI tracking & reporting</li>
+                    </ul>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>E-Commerce Development</h3>
+                    <p>Shopify, WooCommerce, and custom e-commerce platforms with secure payments, order tracking, and integrations that scale your online sales.</p>
+                    <ul class="service-features">
+                        <li>Shopify & WooCommerce stores</li>
+                        <li>Custom checkout flows</li>
+                        <li>Payment gateway integration</li>
+                        <li>Inventory management systems</li>
+                        <li>Conversion rate optimization</li>
+                        <li>Product feed optimization</li>
+                    </ul>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card">
+                    <div class="service-icon">☁️</div>
+                    <h3>Cloud Solutions & API Integration</h3>
+                    <p>From third-party API integrations to cloud deployment, we ensure your business runs smoothly with secure, automated and connected digital infrastructure.</p>
+                    <ul class="service-features">
+                        <li>Third-party API integrations</li>
+                        <li>Cloud infrastructure setup</li>
+                        <li>Australian CDN deployment</li>
+                        <li>Server-side tagging (optional)</li>
+                        <li>Automation & workflow tools</li>
+                        <li>Security & compliance</li>
+                    </ul>
+                </div>
+
+                <!-- Service 7 -->
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Mobile App Development</h3>
+                    <p>iOS and Android apps built with intuitive UX, powerful functionality, and seamless backend integration—all optimised for performance and monetisation.</p>
+                    <ul class="service-features">
+                        <li>Native iOS & Android development</li>
+                        <li>Cross-platform solutions</li>
+                        <li>Intuitive UX design</li>
+                        <li>Backend API integration</li>
+                        <li>App Store optimization</li>
+                        <li>Push notifications & analytics</li>
+                    </ul>
+                </div>
+
+                <!-- Service 8 -->
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>IT Consulting & Maintenance</h3>
+                    <p>Ongoing support, upgrades, monitoring, cybersecurity solutions, and digital strategy to keep your systems optimised and future-ready.</p>
+                    <ul class="service-features">
+                        <li>24-48h support (same-day critical)</li>
+                        <li>Security monitoring & updates</li>
+                        <li>Performance optimization</li>
+                        <li>Backup & disaster recovery</li>
+                        <li>Monthly feature sprints</li>
+                        <li>Strategic digital consulting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Process Section -->
+<section class="process-section">
+    <div class="container">
+        <h2 class="section-title">Our Process</h2>
+        <p class="section-subtitle">From strategy to scale — a proven 4-step framework</p>
+        
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h4>Discovery & Model</h4>
+                <p>Audience research, offer mapping, value proposition, and KPI definition to ensure strategic alignment.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h4>Build for Conversion</h4>
+                <p>UX design, persuasive copy, optimized development, speed tuning, and trust-building elements.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h4>Traffic & Authority</h4>
+                <p>SEO foundations, paid campaign setup, content strategy, and link-earning initiatives.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h4>Measure & Scale</h4>
+                <p>Analytics dashboards, A/B testing, conversion experiments, and monthly optimization sprints.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Band -->
+<div class="container">
+    <div class="cta-band">
+        <h3>Want a site that pays for itself?</h3>
+        <p>Book a 20-minute strategy call and discover how we can grow your revenue</p>
+        <a href="#" class="btn-white">Book a Strategy Call</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <!-- Column 1: Brand -->
+            <div class="footer-col">
+                <div class="logo" style="font-size: 2rem; margin-bottom: 1rem;">OPAL X</div>
+                <p style="color: var(--gray); line-height: 1.8;">Functional websites that monetise. Built for Australian businesses with offices in Sydney & Sri Lanka.</p>
+            </div>
+            
+            <!-- Column 2: Services -->
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul class="footer-list">
+                    <li><a href="#web-design">Web Design & Development</a></li>
+                    <li><a href="#custom-software">Custom Software</a></li>
+                    <li><a href="#seo">SEO & Marketing</a></li>
+                    <li><a href="#ecommerce">E-Commerce Solutions</a></li>
+                    <li><a href="#care">Care Plans</a></li>
+                </ul>
+            </div>
+            
+            <!-- Column 3: Company -->
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul class="footer-list">
+                    <li><a href="#how-it-works">How it works</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <!-- Column 4: Legal -->
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul class="footer-list">
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#cookies">Cookie Policy</a></li>
+                    <li><a href="#accessibility">Accessibility</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 OPAL X. All rights reserved. | ABN: [Your ABN]</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Required CSS Styles -->
+<style>
+    :root {
+        --navy: #0a1929;
+        --teal: #14b8a6;
+        --charcoal: #1e293b;
+        --off-white: #f8fafc;
+        --gold: #fbbf24;
+        --gray: #94a3b8;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 4rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .section-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 1rem;
+        letter-spacing: -2px;
+        color: var(--off-white);
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: var(--gray);
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 4rem;
+    }
+
+    /* Process Section */
+    .process-section {
+        padding: 6rem 4rem;
+        background: var(--bg-black);
+        margin: 6rem 0;
+        border-radius: 30px;
+    }
+
+    .process-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-top: 4rem;
+    }
+
+    .process-step {
+        text-align: center;
+        position: relative;
+    }
+
+    .step-number {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--card-bg), #3b82f6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin: 0 auto 1.5rem;
+        color: white;
+    }
+
+    .process-step h4 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        color: var(--off-white);
+    }
+
+    .process-step p {
+        color: var(--gray);
+        line-height: 1.7;
+    }
+
+    /* CTA Band */
+    .cta-band {
+        background: linear-gradient(135deg, var(--bg-black), #000000);
+        padding: 4rem;
+        border-radius: 20px;
+        text-align: center;
+        margin: 6rem 0;
+    }
+
+    .cta-band h3 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+        color: white;
+    }
+
+    .cta-band p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        color: white;
+    }
+
+    .btn-white {
+        background: white;
+        color: var(--navy);
+        padding: 1.2rem 3rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-white:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Footer */
+    footer {
+        background: var(--bg-black);
+        padding: 4rem 4rem 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--off-white);
+    }
+
+    .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 4rem;
+        margin-bottom: 3rem;
+    }
+
+    .footer-col h4 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--off-white);
+    }
+
+    .footer-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-list li {
+        margin-bottom: 0.8rem;
+    }
+
+    .footer-list a {
+        color: var(--gray);
+        text-decoration: none;
+        transition: color 0.3s;
+        font-size: 0.95rem;
+    }
+
+    .footer-list a:hover {
+        color: var(--teal);
+    }
+
+    .footer-bottom {
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        color: var(--gray);
+        font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .container {
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+        }
+
+        .process-section {
+            padding: 4rem 2rem;
+        }
+
+        .process-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .cta-band {
+            padding: 3rem 2rem;
+        }
+
+        .cta-band h3 {
+            font-size: 2rem;
+        }
+
+        footer {
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+    }
+</style>
