@@ -1,4 +1,27 @@
 {
-    "cleanUrls": true
-  }
-  
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/Portfolio", "destination": "/projects", "permanent": true },
+    { "source": "/Portfolio.html", "destination": "/projects", "permanent": true },
+    { "source": "/portfolio", "destination": "/projects", "permanent": true },
+    { "source": "/Fashionbags", "destination": "/fashionbags", "permanent": true },
+    { "source": "/Fashionbags.html", "destination": "/fashionbags", "permanent": true },
+    { "source": "/opalx", "destination": "/projects", "permanent": true },
+    { "source": "/alkhatt", "destination": "/projects", "permanent": true },
+    { "source": "/contact", "destination": "/#contact", "permanent": true },
+    { "source": "/cv", "destination": "/assets/Mohamed-Shahmy-CV.pdf", "permanent": false },
+    { "source": "/resume", "destination": "/assets/Mohamed-Shahmy-CV.pdf", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/assets/fonts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/assets/(site.css|site.js)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/assets/img/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }] },
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+      { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+      { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+    ] }
+  ]
+}
