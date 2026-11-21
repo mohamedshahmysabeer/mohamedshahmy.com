@@ -818,3 +818,6 @@ ul, ol { padding: 0; list-style: none; }
 .story-nav.next { right: max(1rem, calc(50% - min(92svh, 860px) * 9 / 32 - 4rem)); }
 @media (max-width: 700px) { .story-stage { height: 100svh; border-radius: 0; } .story-nav { display: none; } }
 @media (max-width: 700px) { .story-stage video { object-fit: contain; } }
+/* seamless loops: spacing as margins so -50% lands exactly on a repeat */
+.marquee-track { gap: 0; }
+.marquee-track img, .marquee-track .tcard { margin-right: clamp(.75rem, 1.5vw, 1.25rem); }
